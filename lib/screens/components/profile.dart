@@ -13,7 +13,6 @@ class ProfilePage extends StatelessWidget {
 
 
     return Scaffold(
-      appBar: AppBar(title: const Text(AppStrings.profile)),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -71,7 +70,6 @@ Widget _showEmail(BuildContext context) {
     readOnly: true, // Make it read-only for now
   );
 }
-
 Widget _EditTheme(BuildContext context) {
   return Row(
     children: [
@@ -96,9 +94,9 @@ Widget _EditTheme(BuildContext context) {
 }
 Widget _changeTheme(BuildContext context) {
   return ElevatedButton(
-    onPressed: () => context.read<ThemeCubit>().toggleTheme(),
+    onPressed: () => BlocProvider.of<ThemeCubit>(context).toggleTheme(),
     child: const Text(AppStrings.changeTheme,
-      style: TextStyle(fontSize: 18, color: Colors.blue, fontWeight: FontWeight.bold)
+        style: TextStyle(fontSize: 18, color: Colors.blue, fontWeight: FontWeight.bold)
     ),
   );
 }

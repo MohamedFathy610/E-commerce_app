@@ -1,6 +1,6 @@
 
 import 'package:e_commerce_new/bloc/auth_bloc/auth_bloc.dart';
-import 'package:e_commerce_new/screens/home.dart';
+import 'package:e_commerce_new/screens/components/home.dart';
 import 'package:e_commerce_new/screens/auth/signup_screen.dart';
 import 'package:e_commerce_new/utils/app_strings.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -173,6 +173,7 @@ Widget _emailTextField(Function(String?) onSaved) {
           .hasMatch(value)) {
         return AppStrings.invalidEmail;
       }
+      return null;
     },
     decoration: InputDecoration(
       labelText: AppStrings.email,
@@ -191,6 +192,7 @@ Widget _passwordTextField(Function(String?) onSaved) {
       else if (value.length < 6) {
         return AppStrings.passwordMinLength;
       }
+      return null;
     },
     obscureText: true,
     decoration: InputDecoration(

@@ -1,5 +1,5 @@
 import 'package:e_commerce_new/bloc/auth_bloc/auth_bloc.dart';
-import 'package:e_commerce_new/screens/home.dart';
+import 'package:e_commerce_new/screens/components/home.dart';
 import 'package:e_commerce_new/screens/auth/login.dart';
 import 'package:flutter/material.dart';
 import 'package:e_commerce_new/utils/app_colors.dart';

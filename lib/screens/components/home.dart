@@ -1,6 +1,6 @@
 import 'package:e_commerce_new/models/product_model.dart';
-import 'package:e_commerce_new/screens/cart.dart';
-import 'package:e_commerce_new/screens/profile.dart';
+import 'package:e_commerce_new/screens/components/cart.dart';
+import 'package:e_commerce_new/screens/components/profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -10,6 +10,7 @@ class HomePage extends StatefulWidget {
   @override
   State<HomePage> createState() => _HomePageState();
 }
+
 class _HomePageState extends State<HomePage> {
   static List<Product> cart = [];
 
@@ -17,77 +18,80 @@ class _HomePageState extends State<HomePage> {
     Product(
       name: 'Product 1',
       price: 100.0,
-      imageUrl: 'https://assets.adidas.com/images/w_940,f_auto,q_auto/038692973e594495a5966d3ba81af3b7_9366/JK2250_21_model.jpg',
-      id: '1', rating: 4.7,
+      imageUrl:
+          'https://assets.adidas.com/images/w_940,f_auto,q_auto/038692973e594495a5966d3ba81af3b7_9366/JK2250_21_model.jpg',
+      id: '1',
+      rating: 4.7,
     ),
-     Product(
+    Product(
       name: 'Product 2',
       price: 200.0,
-      imageUrl: 'https://assets.adidas.com/images/w_940,f_auto,q_auto/038692973e594495a5966d3ba81af3b7_9366/JK2250_21_model.jpg',
-       id: '2', rating: 4,
+      imageUrl:
+          'https://assets.adidas.com/images/w_940,f_auto,q_auto/038692973e594495a5966d3ba81af3b7_9366/JK2250_21_model.jpg',
+      id: '2',
+      rating: 4,
     ),
     Product(
       name: 'Product 3',
       price: 300.0,
-      imageUrl: 'https://assets.adidas.com/images/w_940,f_auto,q_auto/038692973e594495a5966d3ba81af3b7_9366/JK2250_21_model.jpg',
-      id: '3', rating:4.5,
+      imageUrl:
+          'https://assets.adidas.com/images/w_940,f_auto,q_auto/038692973e594495a5966d3ba81af3b7_9366/JK2250_21_model.jpg',
+      id: '3',
+      rating: 4.5,
     ),
     Product(
       name: 'Product 4',
       price: 400.0,
-      imageUrl: 'https://assets.adidas.com/images/w_940,f_auto,q_auto/038692973e594495a5966d3ba81af3b7_9366/JK2250_21_model.jpg',
-      id: '4', rating: 4.8,
+      imageUrl:
+          'https://assets.adidas.com/images/w_940,f_auto,q_auto/038692973e594495a5966d3ba81af3b7_9366/JK2250_21_model.jpg',
+      id: '4',
+      rating: 4.8,
     ),
     Product(
       name: 'Product 5',
       price: 500.0,
-      imageUrl: 'https://assets.adidas.com/images/w_940,f_auto,q_auto/038692973e594495a5966d3ba81af3b7_9366/JK2250_21_model.jpg',
-      id: '5', rating: 4.9,
+      imageUrl:
+          'https://assets.adidas.com/images/w_940,f_auto,q_auto/038692973e594495a5966d3ba81af3b7_9366/JK2250_21_model.jpg',
+      id: '5',
+      rating: 4.9,
     ),
     Product(
       name: 'Product 6',
       price: 600.0,
-      imageUrl: 'https://assets.adidas.com/images/w_940,f_auto,q_auto/038692973e594495a5966d3ba81af3b7_9366/JK2250_21_model.jpg',
-      id: '6', rating: 4.6,
+      imageUrl:
+          'https://assets.adidas.com/images/w_940,f_auto,q_auto/038692973e594495a5966d3ba81af3b7_9366/JK2250_21_model.jpg',
+      id: '6',
+      rating: 4.6,
     ),
     Product(
       name: 'Product 7',
       price: 700.0,
-      imageUrl: 'https://assets.adidas.com/images/w_940,f_auto,q_auto/038692973e594495a5966d3ba81af3b7_9366/JK2250_21_model.jpg',
-      id: '7', rating: 4.3,
+      imageUrl:
+          'https://assets.adidas.com/images/w_940,f_auto,q_auto/038692973e594495a5966d3ba81af3b7_9366/JK2250_21_model.jpg',
+      id: '7',
+      rating: 4.3,
     ),
   ];
+  List<String> appBarText = ["welcome to my store", " profile", "cart"];
 
   int selectedIndex = 0;
 
   void _toggleCart(Product product) {
     setState(() {
-
-        cart.add(product);
-
+      cart.add(product);
     });
   }
 
   @override
   Widget build(BuildContext context) {
     final List<Widget> pages = [
-      ListView.builder(
-        padding: const EdgeInsets.all(16),
-        itemCount: kProducts.length,
-        itemBuilder: (_, i) {
-          final p = kProducts[i];
-          return productTile(
-            context: context,
-            product: p,
-            onCart: () => _toggleCart(p),
-          );
-        },
-      ),
+      _homeBody(context),
       const ProfilePage(),
       Cart(products: cart),
     ];
 
     return Scaffold(
+      appBar: AppBar(title: Text(appBarText[selectedIndex]), centerTitle: true),
       body: pages[selectedIndex],
       bottomNavigationBar: BottomAppBar(
         child: Row(
@@ -131,6 +135,22 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
+ ListView _homeBody(BuildContext context) {
+    return ListView.builder(
+            padding: const EdgeInsets.all(16),
+            itemCount: kProducts.length,
+            itemBuilder: (_, i) {
+              final p = kProducts[i];
+              return productTile(
+                context: context,
+                product: p,
+                onCart: () => _toggleCart(p),
+              );
+            },
+          );
+
+  }
 }
 
 Widget productTile({
@@ -140,20 +160,11 @@ Widget productTile({
 }) {
   return Card(
     margin: const EdgeInsets.only(bottom: 12),
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(16),
-    ),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
     child: ListTile(
       leading: ClipRRect(
         borderRadius: BorderRadius.circular(12),
-        child: product.imageUrl.startsWith('http')
-            ? Image.network(
-          product.imageUrl,
-          width: 60,
-          height: 60,
-          fit: BoxFit.cover,
-        )
-            : Image.asset(
+        child: Image.network(
           product.imageUrl,
           width: 60,
           height: 60,
@@ -164,17 +175,16 @@ Widget productTile({
       subtitle: Text("Price: ${product.price} EGP"),
       trailing: TextButton(
         onPressed: onCart,
-        child: Text( "Add to Cart",
-  style: TextStyle( color: Colors.blue,
-        ),
+        child: Text("Add to Cart", style: TextStyle(color: Colors.blue)),
       ),
     ),
-  ) );
+  );
 }
+
 Widget _welcomeMessage(BuildContext context) {
   final user = FirebaseAuth.instance.currentUser;
   return Text(
-    "Welcome, ${user?.displayName }!",
+    "Welcome, ${user?.displayName}!",
     style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
     textAlign: TextAlign.center,
   );

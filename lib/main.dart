@@ -1,6 +1,6 @@
 import 'package:e_commerce_new/bloc/auth_bloc/auth_bloc.dart';
 import 'package:e_commerce_new/bloc/theme_cubit/theme_cubit.dart';
-import 'package:e_commerce_new/screens/home.dart';
+import 'package:e_commerce_new/screens/components/home.dart';
 import 'package:e_commerce_new/screens/auth/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
