@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce_new/models/product_model.dart';
 import 'package:e_commerce_new/screens/components/cart.dart';
 import 'package:e_commerce_new/screens/components/profile.dart';
@@ -76,10 +77,27 @@ class _HomePageState extends State<HomePage> {
 
   int selectedIndex = 0;
 
-  void _toggleCart(Product product) {
-    setState(() {
-      cart.add(product);
-    });
+  void _toggleCart(Product product) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection("cart")
+          .doc(product.id)
+          .set({
+        "id": product.id,
+        "name": product.name,
+        "price": product.price,
+        "imageUrl": product.imageUrl,
+        "rating": product.rating,
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("${product.name} added to cart")),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Error adding to cart: $e")),
+      );
+    }
   }
 
   @override
@@ -87,7 +105,7 @@ class _HomePageState extends State<HomePage> {
     final List<Widget> pages = [
       _homeBody(context),
       const ProfilePage(),
-      Cart(products: cart),
+      Cart(),
     ];
 
     return Scaffold(
